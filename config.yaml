@@ -1,8 +1,9 @@
 path_model: "models/model_final_300_sm.pth" #MODEL'S PATH
 probability: 0.5
+iter_log_ratio: 0.2 #HOW OFTEN DISPLAY THE RESULTS OF DENOSING IN THE COMMAND LINE
+
 
 dataset: "nrcki" #NAME OF THE FOLDER THAT CONTAINS ALL THE COMPONENTS
 path_source: "path2files" ##DO NOT CHANGE! FOLDER THAT CONTAINS FILES WITH THE PATH TO ALL THE COMPONENTS
 data_keys: ["data", "tdata"] #DO NOT CHANGE!
-iter_log_ratio: 0.2 #HOW OFTEN DISPLAY THE RESULTS OF DENOSING IN THE COMMAND LINE
-if_labels: False #DO NOT CHANGE! If you have already labels, to test the accuracy of the classifier
+if_labels: False #DO NOT CHANGE!

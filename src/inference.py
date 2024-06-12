@@ -93,14 +93,26 @@ def inference(config):
 
             if config.if_labels:
                 label_stack.append(label.cpu().detach().tolist())
+
             for key in out.keys():
-                out_stack[key].extend(np.argmax(out[key].cpu().detach().tolist(), axis=1))
+                #out_stack[key].extend(np.argmax(out[key].cpu().detach().tolist(), axis=1))
 
                 # Collect probability of the predicted class
                 predictions = torch.argmax(out[key], dim=1)
                 predicted_probs = softmax_prob.gather(1, predictions.unsqueeze(1)).squeeze(1)
                 prob_stack[key].extend(predicted_probs.cpu().detach().tolist())
-                
+
+                adjusted_labels = []
+                for prob, pred in zip(predicted_probs, predictions):
+                    if prob < config.probability and pred.item() == 1:
+                        new_label = 0
+                    else:
+                        new_label = pred.item()
+
+                    adjusted_labels.append(new_label)
+
+                out_stack[key].extend(adjusted_labels)
+
                 if config.if_labels:
                     step_info['acc'][key] = accuracy(out_stack[key], label_stack)
                     step_info['sen'][key] = sensitivity(out_stack[key], label_stack)
