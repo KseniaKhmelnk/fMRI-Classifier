@@ -34,8 +34,8 @@ if __name__ == "__main__":
     config = argparse.Namespace(**config_dict)
 
     # Set the device attribute
-    #config.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    config.device = torch.device('cpu')
+    config.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    #config.device = torch.device('cpu')
     config.timestamp = datetime.today().strftime("%Y%m%d%H%M%S")
     print("Number of CUDA devices", torch.cuda.device_count())
     test(config)
