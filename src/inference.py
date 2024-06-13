@@ -30,14 +30,16 @@ def inference(config):
         config.network = "cbam_test3_234"
     elif config.path_model == "models/model_final_100_sm.pth":
         config.network = "resnet_test2"
+    
+    print("Model :", config.path_model)
     network = config.network.lower()
 
     if network == "resnet_test2":
-            res = resnet.resnet_test2
-            print("network : resnet_test2")
+        res = resnet.resnet_test2
+        #print("Network : resnet_test2")
     elif network == "cbam_test3_234":
         res = cbam.resnet_test3_234
-        print("network : cbam_test3_234")
+        #print("Network : cbam_test3_234")
     else:
         raise ValueError("No resnet match {}".format(network))
 
@@ -55,8 +57,7 @@ def inference(config):
 
     # testing
     print("Device :", device)
-    print("Testing source : ", source)
-    print("Testing...")
+    print("Source : ", source)
     d = ["sm"] 
     eval_list = ['acc', 'sen', 'spec']
     step_info = {key2: {key:[] for key in ["sm"]} for key2 in eval_list} #NEW
@@ -137,5 +138,5 @@ def inference(config):
             
             if label == 1:
                 f_label_1.write(line)
-    print("[!] Testing complete. Info is saved in", output_file)
+    print("[!] Inference complete. Info is saved in", output_file)
     print("[!] Info for signal data is saved in", output_file_label_1)
