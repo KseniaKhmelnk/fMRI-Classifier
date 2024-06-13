@@ -42,9 +42,8 @@ def inference(config):
         raise ValueError("No resnet match {}".format(network))
 
     net = {}
-    net["sm"] = nn.DataParallel(Resnet_sm(res=res)).to(device)
-    net["sm"].load_state_dict(torch.load(config.path_model))
-
+    net["sm"] = nn.DataParallel(Resnet_sm(res=res).to(device))#.to(device)
+    net["sm"].load_state_dict(torch.load(config.path_model, map_location=device))
     def set_bn_eval(m):
         if isinstance(m, (nn.BatchNorm3d, nn.BatchNorm1d)):
             m.eval()
